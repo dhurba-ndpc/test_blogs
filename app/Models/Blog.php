@@ -14,6 +14,7 @@ class Blog extends Model
         'description_en',
         'description_np',
         'images',
+        'status',
     ];
 
     protected $casts = [

@@ -24,19 +24,20 @@
                                 <th>Title NP</th>
                                 <th>Description EN</th>
                                 <th>Description NP</th>
-                                <th>Images</th>
+                                <th>status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($blogs as $blog)
                                 <tr>
+                                  
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ Str::limit($blog->title_en ?? $blog->title, 50) }}</td>
                                     <td>{{ Str::limit($blog->title_np ?? '-', 50) }}</td>
                                     <td>{{ Str::limit($blog->description_en ?? $blog->description, 80) }}</td>
                                     <td>{{ Str::limit($blog->description_np ?? '-', 80) }}</td>
-                                    <td>{{ is_array($blog->images) ? count($blog->images) : 0 }}</td>
+                                    <td>{{ $blog->status == 1 ? 'Published' : 'Draft' }}</td>
                                     <td>
                                         <a href="{{ route('blog.edit', $blog->id) }}" class="btn btn-sm btn-secondary">Edit</a>
                                         <form action="{{ route('blog.destroy', $blog->id) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Delete this blog?');">
@@ -64,3 +65,6 @@
         </div>
     @endif
 @endsection
+
+ 
+

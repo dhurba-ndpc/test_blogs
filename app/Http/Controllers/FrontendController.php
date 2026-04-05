@@ -12,7 +12,7 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::orderBy('created_at', 'desc')->paginate(9);
+        $blogs = Blog::where('status', '1')->orderBy('created_at', 'desc')->paginate(9);
         return view('frontend.index', compact('blogs'));
     }
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description_np')->nullable();
             $table->string('slug')->nullable();
             $table->json('images')->nullable();
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }

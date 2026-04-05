@@ -31,39 +31,40 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-       $request->validate([
-           'title_en' => 'required|string|max:255',
-           'title_np' => 'nullable|string|max:255',
-           'description_en' => 'required|string',
-           'description_np' => 'nullable|string',
-           'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-       ]);
+        $request->validate([
+            'title_en' => 'required|string|max:255',
+            'title_np' => 'nullable|string|max:255',
+            'description_en' => 'required|string',
+            'description_np' => 'nullable|string',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-       // Process the uploaded images
-       $images = [];
-       if ($request->hasFile('images')) {
-           foreach ($request->file('images') as $image) {
-               $path = $image->store('blogs', 'public');
-               $images[] = Storage::url($path);
-           }
-       }
+        // Process the uploaded images
+        $images = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('blogs', 'public');
+                $images[] = Storage::url($path);
+            }
+        }
 
-       // Create the blog post
+        // Create the blog post
         $slug = Str::slug($request->title_en) . '-' . Str::random(6);
-       $blog = Blog::create([
-           'title_en' => $request->title_en,
-           'title_np' => $request->title_np,
-           'description_en' => $request->description_en,
-           'description_np' => $request->description_np,
+        $blog = Blog::create([
+            'title_en' => $request->title_en,
+            'title_np' => $request->title_np,
+            'description_en' => $request->description_en,
+            'description_np' => $request->description_np,
             'slug' => $slug,
-           'images' => $images,
-       ]);
+            'status' => $request->status ?? 0,
+            'images' => $images,
+        ]);
 
-       if($blog) {
-           return redirect()->route('blog.index')->with('success', 'Blog created successfully.');
-       }
+        if ($blog) {
+            return redirect()->route('blog.index')->with('success', 'Blog created successfully.');
+        }
 
-       return redirect()->route('blog.index')->with('error', 'Failed to create blog.');
+        return redirect()->route('blog.index')->with('error', 'Failed to create blog.');
     }
 
     /**
@@ -122,11 +123,12 @@ class BlogController extends Controller
             'title_np' => $request->title_np,
             'description_en' => $request->description_en,
             'description_np' => $request->description_np,
-             'slug' => $slug,
+            'status' => $request->status ?? 0,
+            'slug' => $slug,
             'images' => $images,
         ]);
 
-        if($blog) {
+        if ($blog) {
             return redirect()->route('blog.index')->with('success', 'Blog updated successfully.');
         }
 
@@ -149,10 +151,19 @@ class BlogController extends Controller
         }
 
         $deleted = $blog->delete();
-        
-        if($deleted) {
+
+        if ($deleted) {
             return redirect()->route('blog.index')->with('success', 'Blog deleted successfully.');
         }
         return redirect()->route('blog.index')->with('error', 'Failed to delete blog.');
+    }
+
+    public function statusUpdate(Request $request, $id)
+    {
+        $blog = Blog::findOrFail($id);
+        $blog->status = $request->status;
+        $blog->save();
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
     }
 }
