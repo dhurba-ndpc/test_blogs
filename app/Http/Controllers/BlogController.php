@@ -56,7 +56,7 @@ class BlogController extends Controller
             'description_en' => $request->description_en,
             'description_np' => $request->description_np,
             'slug' => $slug,
-            'status' => $request->status ?? 0,
+            'status' => $request->status ?? '0',
             'images' => $images,
         ]);
 
@@ -123,7 +123,7 @@ class BlogController extends Controller
             'title_np' => $request->title_np,
             'description_en' => $request->description_en,
             'description_np' => $request->description_np,
-            'status' => $request->status ?? 0,
+            'status' => $request->status ?? '0',
             'slug' => $slug,
             'images' => $images,
         ]);

@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="col-lg-12">
-                     <input id="status_id" name="status" type="checkbox" {{ isset($blog->status) && $blog->status == 1 ? 'checked' : '' }}>
+                     <input id="status_id" name="status" type="checkbox" value="1" {{ isset($blog->status) && $blog->status == '1' ? 'checked' : '' }}>
                       <label for="status_id">Check the button to Publish post.</label>
                 </div>
 
@@ -161,14 +161,6 @@
         </script>
 
 
-<script>
-    $('#status_id').on('change', function() {
-        if ($(this).is(':checked')) {
-            $(this).val(1);
-        } else {
-            $(this).val(0);
-        }
-    });
-</script>
+ 
     @endpush
 @endsection

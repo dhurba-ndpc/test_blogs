@@ -14,5 +14,5 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('blog', App\Http\Controllers\BlogController::class)->names('blog');
-    Route::post('status-update/{id}', [App\Http\Controllers\BlogController::class, 'statusUpdate'])->name('blog.status.update');
+    
 });
