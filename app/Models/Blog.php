@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     protected $fillable = [
-        
+
         'title_en',
         'title_np',
         'slug',
@@ -15,14 +15,20 @@ class Blog extends Model
         'description_np',
         'images',
         'status',
+        'user_id',
     ];
 
     protected $casts = [
         'images' => 'array',
     ];
 
-    public function getRouteKeyName()
+    protected $hidden = [
+        'id',
+        'user_id', // You can hide the foreign key here too if you don't want it exposed
+    ];
+
+    public function user()
     {
-        return 'slug';
+        return $this->belongsTo(User::class);
     }
 }

@@ -13,6 +13,8 @@ class FrontendController extends Controller
     public function index()
     {
         $blogs = Blog::where('status', '1')->orderBy('created_at', 'desc')->paginate(9);
+      // This will show you what the frontend/API actually sees
+ 
         return view('frontend.index', compact('blogs'));
     }
 

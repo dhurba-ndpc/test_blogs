@@ -57,6 +57,7 @@ class BlogController extends Controller
             'description_np' => $request->description_np,
             'slug' => $slug,
             'status' => $request->status ?? '0',
+            'user_id' => auth()->id(),
             'images' => $images,
         ]);
 

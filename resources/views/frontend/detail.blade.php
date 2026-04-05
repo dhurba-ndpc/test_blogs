@@ -69,7 +69,7 @@
 
                             <!-- Meta Information -->
                             <div class="d-flex align-items-center mb-4 text-muted">
-                                <span class="me-3"><i class="fas fa-user"></i> By Admin</span>
+                                <span class="me-3"><i class="fas fa-user"></i> By {{ $blog->user->name }}</span>
                                 <span class="me-3"><i class="fas fa-calendar"></i>
                                     {{ $blog->created_at->format('M d, Y') }}</span>
                                
